@@ -1,7 +1,7 @@
 # This is a sample Python script.
 import os
 
-os.environ["OPENAI_API_KEY"] = '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'
+os.environ["OPENAI_API_KEY"] = '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'
 os.environ["SERPAPI_API_KEY"] = 'e9f8a96b4dce334dfb65cacb0d04220691fae9bd8965dbeac73593f802180039'
 
 from langchain.agents import load_tools
@@ -101,13 +101,30 @@ def Example_Memory2():
 
     print(conversation.predict(input="Tell me about yourself."))
 
+
+
+def get_webpage_as_text(url):
+    import requests
+    from bs4 import BeautifulSoup
+
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    return soup.get_text()
+
+def Get_and_Parse_WebPage(url):
+    text = get_webpage_as_text(url)
+    return text
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print_hi('Ramon')
-    Example_Memory2()
+    print(Get_and_Parse_WebPage("https://hostings.info/hostings/country/mexico"))
 
 
 
+
+# https://hth.guide/best-web-hosting-mexico/
+# https://hostings.info/hostings/country/mexico
 
 
 
