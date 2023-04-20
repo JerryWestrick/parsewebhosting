@@ -1,5 +1,6 @@
 # This is a sample Python script.
 import os
+import time
 
 os.environ["OPENAI_API_KEY"] = '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'
 os.environ["SERPAPI_API_KEY"] = 'e9f8a96b4dce334dfb65cacb0d04220691fae9bd8965dbeac73593f802180039'
@@ -104,21 +105,35 @@ def Example_Memory2():
 
 
 def get_webpage_as_text(url):
-    import requests
-    from bs4 import BeautifulSoup
+    from selenium import webdriver
+    import time
 
-    page = requests.get(url)
-    soup = BeautifulSoup(page.content, 'html.parser')
-    return soup.get_text()
-
-def Get_and_Parse_WebPage(url):
-    text = get_webpage_as_text(url)
+    # this routine shoul dread the webpage https://hth.guide/best-web-hosting-mexico/ and return the text
+    driver = webdriver.Chrome()
+    driver.get(url)
+    time.sleep(5)
+    text = driver.page_source
+    driver.close()
     return text
+
+def list_files_in_dir(path):
+    return os.listdir(path)
+
+
+def largest_file(aws_bucket_name, path):
+    import boto3
+    s3 = boto3.resource('s3')
+    bucket = s3.Bucket(aws_bucket_name)
+    files = bucket.objects.filter(Prefix=path)
+    return max(files, key=lambda x: x.size).key
+
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print_hi('Ramon')
-    print(Get_and_Parse_WebPage("https://hostings.info/hostings/country/mexico"))
+    # print(get_webpage_as_text("https://hostings.info/hostings/country/mexico"))
+    print(list_files_in_dir('.'))
 
 
 
