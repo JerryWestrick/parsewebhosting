@@ -1,14 +1,13 @@
 # This is a sample Python script.
 import os
-import time
+import Environment.Keys
 
-os.environ["OPENAI_API_KEY"] = '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'
-os.environ["SERPAPI_API_KEY"] = 'e9f8a96b4dce334dfb65cacb0d04220691fae9bd8965dbeac73593f802180039'
 
 from langchain.agents import load_tools
 from langchain.agents import initialize_agent
 from langchain.agents import AgentType
 from langchain.llms import OpenAI
+
 
 def Example_Agents():
     # First, let's load the language model we're going to use to control the agent.
@@ -16,7 +15,6 @@ def Example_Agents():
 
     # Next, let's load some tools to use. Note that the `llm-math` tool uses an LLM, so we need to pass that in.
     tools = load_tools(["serpapi", "llm-math"], llm=llm)
-
 
     # Finally, let's initialize an agent with the tools, the language model, and the type of agent we want to use.
     agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
@@ -26,10 +24,10 @@ def Example_Agents():
               "At what timeshuld I leave Merida in a car to arrive at the cancun airport at that time?")
 
 
-
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+
 
 def Example_Memory():
     from langchain import OpenAI, ConversationChain
@@ -103,7 +101,6 @@ def Example_Memory2():
     print(conversation.predict(input="Tell me about yourself."))
 
 
-
 def get_webpage_as_text(url):
     from selenium import webdriver
     import time
@@ -116,31 +113,18 @@ def get_webpage_as_text(url):
     driver.close()
     return text
 
+
 def list_files_in_dir(path):
     return os.listdir(path)
-
-
-def largest_file(aws_bucket_name, path):
-    import boto3
-    s3 = boto3.resource('s3')
-    bucket = s3.Bucket(aws_bucket_name)
-    files = bucket.objects.filter(Prefix=path)
-    return max(files, key=lambda x: x.size).key
-
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print_hi('Ramon')
-    # print(get_webpage_as_text("https://hostings.info/hostings/country/mexico"))
-    print(list_files_in_dir('.'))
-
-
-
+    print(get_webpage_as_text("https://hostings.info/hostings/country/mexico"))
 
 # https://hth.guide/best-web-hosting-mexico/
 # https://hostings.info/hostings/country/mexico
-
 
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
